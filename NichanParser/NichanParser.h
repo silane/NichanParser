@@ -1,6 +1,6 @@
 #pragma once
 #include "Nichan.h"
-#include "MyXml/MyXml.h"
+#include "../MyXml/MyXml.h"
 #include <memory>
 
 namespace Nichan

@@ -166,12 +166,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyXml\MyXml.cpp" />
-    <ClCompile Include="NichanParser.cpp" />
+    <ClCompile Include="NichanParser\NichanParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyXml\MyXml.h" />
-    <ClInclude Include="Nichan.h" />
-    <ClInclude Include="NichanParser.h" />
+    <ClInclude Include="NichanParser\Nichan.h" />
+    <ClInclude Include="NichanParser\NichanParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

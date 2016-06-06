@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NichanParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MyXml\MyXml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NichanParser\NichanParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Nichan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NichanParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MyXml\MyXml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NichanParser\NichanParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NichanParser\Nichan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

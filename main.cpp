@@ -1,5 +1,5 @@
 
-#include "NichanParser.h"
+#include "NichanParser/NichanParser.h"
 #include <iostream>
 
 #include <ctime>

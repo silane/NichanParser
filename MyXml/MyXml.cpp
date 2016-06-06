@@ -19,7 +19,7 @@ XPathResult &XPathResult::operator=(const XPathResult &obj) noexcept
 	return *this;
 }
 	
-	XPathResult::XPathResult(XPathResult &&obj) noexcept: xpathObj(obj.xpathObj)
+XPathResult::XPathResult(XPathResult &&obj) noexcept: xpathObj(obj.xpathObj)
 {
 	obj.xpathObj=nullptr;
 }
