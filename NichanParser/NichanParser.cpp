@@ -2,10 +2,32 @@
 #include "Nichan.h"
 #include <regex>
 #include <ctime>
+#include <locale>
 
 extern "C"
 {
 	#include <libxml\HTMLparser.h>
+}
+
+namespace
+{
+	void TrimSpace(std::string &val)
+	{
+		std::string::size_type idx;
+		for (idx = 0; idx < val.size(); idx++)
+		{
+			if (!std::isspace(val[idx],std::locale()))
+				break;
+		}
+		val=val.substr(idx);
+
+		for (idx = val.size() - 1; idx >= 0; idx--)
+		{
+			if (!std::isspace(val[idx], std::locale()))
+				break;
+		}
+		val.resize(idx + 1);
+	}
 }
 
 namespace Nichan
@@ -37,6 +59,7 @@ namespace Nichan
 
 		MyXml::XPathResult fr = doc.XPath(u8"string(/html/body/h1[@class=\"title\"]/text())");
 		ret.title = fr.GetString();
+		TrimSpace(ret.title);
 
 		fr=doc.XPath(u8"/html/body/div[@class=\"thread\"]/div[@class=\"post\"]");
 		xmlNodeSetPtr nodeSet= fr.GetNodeSet();
@@ -69,6 +92,7 @@ namespace Nichan
 			res.date = GetDate(doc.XPath(xPathDate, nodeSet->nodeTab[i]).GetString());
 
 			res.message = doc.XPath(xPathMessage, nodeSet->nodeTab[i]).GetString();
+			TrimSpace(res.message);
 
 			ret.res.push_back(std::move(res));
 		}
@@ -103,6 +127,7 @@ namespace Nichan
 
 		MyXml::XPathResult fr = doc.XPath(u8"string(/html/body/div/span/h1/text())");
 		ret.title = fr.GetString();
+		TrimSpace(ret.title);
 
 		fr = doc.XPath(u8"//dl[@class=\"thread\"]/dt");
 		xmlNodeSetPtr nodeSet = fr.GetNodeSet();
@@ -131,6 +156,7 @@ namespace Nichan
 			res.date = GetDate(hoge);
 
 			res.message = doc.XPath(xpathMessage, nodeSet->nodeTab[i]).GetString();
+			TrimSpace(res.message);
 
 			ret.res.push_back(std::move(res));
 		}
