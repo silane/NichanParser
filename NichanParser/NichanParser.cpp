@@ -15,7 +15,8 @@ namespace Nichan
 		static const std::regex regDate(R"(^(\d+)/(\d+)/(\d+)[^ ]* (\d+):(\d+):(\d+)\.(\d+))");
 
 		std::smatch sm;
-		std::regex_search(val, sm, regDate);
+		if (!std::regex_search(val, sm, regDate))
+			return std::chrono::system_clock::time_point();
 		
 		std::tm hoge;
 		hoge.tm_year = std::stoi(sm[1].str())-1900;
@@ -80,7 +81,8 @@ namespace Nichan
 		static const std::regex regDate(R"((\d+)/(\d+)/(\d+)[^ ]* (\d+):(\d+):(\d+)\.(\d+))");
 
 		std::smatch sm;
-		std::regex_search(val, sm, regDate);
+		if (!std::regex_search(val, sm, regDate))
+			return std::chrono::system_clock::time_point();
 
 		std::tm hoge;
 		hoge.tm_year = std::stoi(sm[1].str()) - 1900;
@@ -106,23 +108,29 @@ namespace Nichan
 		xmlNodeSetPtr nodeSet = fr.GetNodeSet();
 		for (int i = 0; i < nodeSet->nodeNr; i++)
 		{
+			static const MyXml::XPathExpr xpathNumber(u8"number(substring-before(text()[1],' '))");
+			static const MyXml::XPathExpr xpathId(u8"string(text()[last()])");
+			static const MyXml::XPathExpr xpathName(u8"string(//b/text())");
+			static const MyXml::XPathExpr xpathMail(u8"string(a/@href)");
+			static const MyXml::XPathExpr xpathMessage(u8"string(following-sibling::dd[1])");
+
 			Res res;
 			
-			res.number = (int)doc.XPath(u8"number(substring-before(text()[1],' '))",nodeSet->nodeTab[i]).GetFloat();
+			res.number = (int)doc.XPath(xpathNumber,nodeSet->nodeTab[i]).GetFloat();
 
-			res.id = doc.XPath(u8"string(text()[last()])", nodeSet->nodeTab[i]).GetString();
-			std::string::size_type idx = res.id.find(u8"ID:");
-			res.id = (idx != std::string::npos) ? res.id.substr(idx + 3) : u8"";
+			std::string hoge = doc.XPath(xpathId, nodeSet->nodeTab[i]).GetString();
+			std::string::size_type idx = hoge.find(u8"ID:");
+			res.id = (idx != std::string::npos) ? hoge.substr(idx + 3) : u8"";
 			
-			res.name = doc.XPath(u8"string(//b/text())", nodeSet->nodeTab[i]).GetString();
+			res.name = doc.XPath(xpathName, nodeSet->nodeTab[i]).GetString();
 
-			res.mail = doc.XPath(u8"string(a/@href)", nodeSet->nodeTab[i]).GetString();
+			res.mail = doc.XPath(xpathMail, nodeSet->nodeTab[i]).GetString();
 			if (res.mail.size()>7)
 				res.mail = res.mail.substr(7);
 
-			res.date = GetDate(doc.XPath(u8"string(text()[last()])", nodeSet->nodeTab[i]).GetString());
+			res.date = GetDate(hoge);
 
-			res.message = doc.XPath(u8"string(following-sibling::dd[1])", nodeSet->nodeTab[i]).GetString();
+			res.message = doc.XPath(xpathMessage, nodeSet->nodeTab[i]).GetString();
 
 			ret.res.push_back(std::move(res));
 		}
