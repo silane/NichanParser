@@ -1,13 +1,14 @@
 
 #include "NichanParser/NichanParser.h"
 #include <iostream>
-
 #include <ctime>
+
+//ctimeを使うとコンパイルできないのを抑制
 #pragma warning(disable:4996)
 #define _CRT_SECURE_NO_WARNINGS
 
 int main() {
-	auto thread=Nichan::ParseFromUrl("http://nhk.2ch.net/test/read.cgi/liveetv/1464944433/");
+	auto thread=Nichan::ParseFromUrl("http://karma.2ch.net/test/read.cgi/livemx/1464700803//");
 
 	std::cout << thread.title << std::endl;
 

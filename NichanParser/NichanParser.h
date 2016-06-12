@@ -3,6 +3,7 @@
 #include "../MyXml/MyXml.h"
 #include <memory>
 
+
 namespace Nichan
 {
 	//スレッドのhtmlの解析器
@@ -33,8 +34,10 @@ namespace Nichan
 	//どのパーサーを使うべきか判定する
 	std::unique_ptr<Parser> DetectParser(const MyXml::Doc &doc);
 
+	//スレのURLからダウンロードしてパースする
 	//ローカルなファイル名でもいい
 	Thread ParseFromUrl(const std::string &url);
 
+	//スレのHTMLからパースする
 	Thread PraseFromText(const std::string &text);
 }
