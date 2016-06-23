@@ -21,6 +21,9 @@ namespace
 		}
 		val=val.substr(idx);
 
+		if (val.size() <= 1)
+			return;
+
 		for (idx = val.size() - 1; idx >= 0; idx--)
 		{
 			if (!std::isspace(val[idx], std::locale()))

@@ -8,7 +8,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 int main() {
-	auto thread=Nichan::ParseFromUrl("http://karma.2ch.net/test/read.cgi/livemx/1464700803//");
+	auto thread=Nichan::ParseFromUrl("http://karma.2ch.net/test/read.cgi/livemx/1466236234/l50");
 
 	std::cout << thread.title << std::endl;
 
