@@ -4,6 +4,10 @@ namespace MyXml
 {
 XPathResult::XPathResult(xmlXPathObjectPtr xpathObj) noexcept: xpathObj(xpathObj)
 {
+	if (xpathObj->type == xmlXPathObjectType::XPATH_NODESET && xpathObj->nodesetval == nullptr)
+	{
+		xpathObj->nodesetval = xmlXPathNodeSetCreate(nullptr);
+	}
 }
 
 XPathResult::XPathResult(const XPathResult &obj) noexcept: xpathObj(xmlXPathObjectCopy(obj.xpathObj))
